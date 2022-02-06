@@ -1,5 +1,6 @@
 package ru.skypro;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
@@ -17,70 +18,101 @@ public class Main {
         employeesArray[8] = new Employee("Морозова Евдокия Ярославовна", "Финансовая служба", 41_000);
         employeesArray[9] = new Employee("Семенова Варвара Игоревна", "Информационный отдел", 30_000);
 
-        getAllEmployees(employeesArray);
+        getAllEmployeesAndPrint(employeesArray);
         System.out.println();
 
-        spendMonthlyOnSalary(employeesArray);
+        spendMonthlyOnSalaryAndPrint(employeesArray);
         System.out.println();
 
-        findMaxSalary(employeesArray);
+        findMaxSalaryAndPrint(employeesArray);
         System.out.println();
 
-        findMinSalary(employeesArray);
+        findMinSalaryAndPrint(employeesArray);
         System.out.println();
 
-        findAverageSalary(employeesArray);
+        findAverageSalaryAndPrint(employeesArray);
         System.out.println();
 
-        fullNameEmployees(employeesArray);
+        fullNameEmployeesAndPrint(employeesArray);
+        System.out.println();
     }
 
-    public static void getAllEmployees(Employee[] employees) {
-        for (int i = 0; i < employees.length; i++) {
-            System.out.println(employees[i]);
+    public static void getAllEmployeesAndPrint(Employee[] employees) {
+        for (Employee employee : employees) {
+            if (employee != null) {
+                System.out.println(employee);
+            }
         }
     }
 
-    public static void spendMonthlyOnSalary(Employee[] employees) {
-        int sum = 0;
+    public static void spendMonthlyOnSalaryAndPrint(Employee[] employees) {
+        float sum = 0;
         for (int i = 0; i < employees.length; i++) {
-            sum += employees[i].getSalary();
+            if (employees[i] != null) {
+                sum += employees[i].getSalary();
+            }
         }
         System.out.println("Расходы на зарплаты в месяц = " + sum);
     }
 
-    public static void findMinSalary(Employee[] employees) {
-        float minSalary = 100_000;
+    public static void findMinSalaryAndPrint(Employee[] employees) {
+        Employee result = employees[0];
+        float minSalary = employees[0].getSalary();
         for (Employee employee : employees) {
-            if (employee.getSalary() < minSalary) {
+            if (employee != null && employee.getSalary() < minSalary) {
                 minSalary = employee.getSalary();
+                result = employee   ;
             }
         }
-        System.out.println("Минимальная зарплата в коллективе = " + minSalary);
+        System.out.println("Минимальная зарплата в коллективе = " + result);
     }
 
-    public static void findMaxSalary(Employee[] employees) {
-        float maxSalary = 0;
+    public static void findMaxSalaryAndPrint(Employee[] employees) {
+        Employee result = employees[0];
+        float maxSalary = employees[0].getSalary();
         for (Employee employee : employees) {
-            if (employee.getSalary() > maxSalary) {
+            if (employee != null && employee.getSalary() > maxSalary) {
                 maxSalary = employee.getSalary();
+                result = employee;
             }
         }
-        System.out.println("Максимальная зарплата в коллективе = " + maxSalary);
+        System.out.println("Максимальная зарплата в коллективе = " + result);
     }
 
-    public static void findAverageSalary(Employee[] employees) {
-        int sum = 0;
+    public static void findAverageSalaryAndPrint(Employee[] employees) {
+        float sum = 0;
         for (int i = 0; i < employees.length; i++) {
-            sum += employees[i].getSalary();
+            if (employees[i] != null) {
+                sum += employees[i].getSalary();
+            }
         }
-        float averageSalary = sum / employees.length;
+        int employeeCount = 0;
+        for (Employee employee : employees) {
+            if (employee != null) {
+                employeeCount++;
+            }
+        }
+        float averageSalary =  sum / employeeCount;
         System.out.println("Средняя зарплата в коллективе = " + averageSalary);
     }
 
-    public static void fullNameEmployees(Employee[] employees) {
+    public static void fullNameEmployeesAndPrint(Employee[] employees) {
         for (int i = 0; i < employees.length; i++) {
-            System.out.println("ФИО сотрудника: " + employees[i].getFullName());
+            if (employees[i] != null) {
+                System.out.println("ФИО сотрудника: " + employees[i].getFullName());
+            }
         }
+    }
+
+    public static boolean addEmployee(Employee[] employees, Employee newEmployee) {
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] == null) {
+                employees[i] = newEmployee;
+                System.out.println("В книгу добавлен сотрудник " + newEmployee.getFullName());
+                return true;
+            }
+        }
+        System.out.println("Книга сотрудников заполнена. Добавить не удалось.");
+        return false;
     }
 }

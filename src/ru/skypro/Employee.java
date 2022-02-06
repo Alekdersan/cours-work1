@@ -5,9 +5,9 @@ import java.util.Objects;
 public class Employee {
     private final String fullName;
     private String department;
-    private int salary;
+    private float salary;
     private static int counter = 1;
-    private int id;
+    private final int id;
 
     public Employee(String fullName, String department, int salary) {
         this.fullName = fullName;
